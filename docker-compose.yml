@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  bloombox:
+    build: .
+    image: bloombox:latest
+    container_name: bloombox
+    restart: unless-stopped
+    networks:
+      - lavalink-net
+    depends_on:
+      lavalink:
+        condition: service_healthy
+    x-develop:
+      watch:
+        - action: rebuild
+          path: package.json
+    environment:
+      - TOKEN=${DISCORD_TOKEN}
+      - LAVALINK_PORT=${LAVA_PORT}
+      - LAVALINK_PASS=${LAVA_PASS}
+      - TZ=Europe/Bucharest
+  lavalink:
+    image: fredboat/lavalink:latest
+    container_name: lavalink
+    hostname: lavalink
+    restart: unless-stopped
+    networks:
+      - lavalink-net
+    volumes:
+      - ./docker/application.yml:/opt/Lavalink/application.yml:ro
+    environment:
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_SECRET}
+      - PORT=${LAVA_PORT}
+      - PASS=${LAVA_PASS}
+      - TZ=Europe/Bucharest
+    healthcheck:
+      test: "exit 0"
+      start_period: 15s
+      retries: 1
+      timeout: 5s
+networks:
+  lavalink-net:

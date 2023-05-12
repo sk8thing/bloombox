@@ -1,0 +1,17 @@
+{
+  "name": "bloombox",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "sk8thing",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "shoukaku": "^3.3.1"
+  }
+}

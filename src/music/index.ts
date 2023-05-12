@@ -1,0 +1,1 @@
+export { BloomManager } from "./manager"
